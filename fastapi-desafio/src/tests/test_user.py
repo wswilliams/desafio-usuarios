@@ -1,12 +1,13 @@
 import json
 
 import pytest
+from datetime import datetime
 
 from app.services import service_user as service
 
 
 def test_create_user(test_app, monkeypatch):
-    test_data = {"nome": "something", "cpf": "123456789", "cpf": "123456789", "endereco": "123456789", "telefone": "123456789", "id": 1}
+    test_data = {"nome": "admin", "email": "admin@example.com", "senha": "admin123", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 1}
 
     def mock_post(db_session, payload):
         return test_data
@@ -19,17 +20,17 @@ def test_create_user(test_app, monkeypatch):
 
 
 def test_create_note_invalid_json(test_app):
-    response = test_app.post("/users/", content=json.dumps({"nome": "something"}))
+    response = test_app.post("/users/", content=json.dumps({"nome": "admin"}))
     assert response.status_code == 422
 
     response = test_app.post(
-        "/users/", content=json.dumps({"nome": "1", "cpf": "2"})
+        "/users/", content=json.dumps({"nome": "1", "email": "2"})
     )
     assert response.status_code == 422
 
 
 def test_read_user(test_app, monkeypatch):
-    test_data = {"nome": "something", "cpf": "123456789", "cep": "123456789", "endereco": "123456789", "telefone": "123456789", "id": 1}
+    test_data = {"nome": "admin", "email": "admin@example.com", "senha": "admin123", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 1}
 
     def mock_get(db_session, id):
         return test_data
@@ -57,8 +58,8 @@ def test_read_user_incorrect_id(test_app, monkeypatch):
 
 def test_read_all_users(test_app, monkeypatch):
     test_data = [
-        {"nome": "something", "cpf": "123456789", "cep": "123456789", "endereco": "123456789", "telefone": "123456789", "id": 1},
-        {"nome": "something", "cpf": "987654321", "cep": "987654321", "endereco": "987654321", "telefone": "987654321", "id": 2},
+       {"nome": "admin", "email": "admin@example.com", "senha": "admin123", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 1}
+        {"nome": "admin1", "email": "admin1@example.com", "senha": "admin1234", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 2},
     ]
 
     def mock_get_all(db_session):
@@ -72,8 +73,8 @@ def test_read_all_users(test_app, monkeypatch):
 
 
 def test_update_user(test_app, monkeypatch):
-    test_data = {"nome": "something", "cpf": "123456789", "cep": "123456789", "endereco": "123456789", "telefone": "123456789", "id": 1}
-    test_update_data = {"nome": "something", "cpf": "987654321", "cep": "987654321", "endereco": "987654321", "telefone": "987654321", "id": 1}
+    test_data =  {"nome": "admin", "email": "admin@example.com", "senha": "admin123", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 1}
+   test_update_data = {"nome": "admin1", "email": "admin1@example.com", "senha": "admin1234", "status": "ativo", "tipo": "admin",  "created_date": datetime.utcnow(), "id": 2},
 
     def mock_get(db_session, id):
         return test_data
@@ -94,11 +95,11 @@ def test_update_user(test_app, monkeypatch):
     "id, payload, status_code",
     [
         [1, {}, 422],
-        [1, {"cpf": "bar"}, 422],
-        [999, {"nome": "something", "cpf": "123456789", "cep": "123456789", "endereco": "123456789", "telefone": "123456789"}, 404],
-        [1, {"nome": "1", "cpf": "bar", "cep": "bar", "endereco": "bar", "telefone": "bar"}, 422],
-        [1, {"nome": "foo", "cpf": "1", "cep": "1", "endereco": "1", "telefone": "1"}, 422],
-        [0, {"nome": "foo", "cpf": "bar", "cep": "bar", "endereco": "bar", "telefone": "bar"}, 422],
+        [1, {"email": "bar"}, 422],
+        [999, {"nome": "admin", "email": "123456789", "senha": "123456789", "status": "123456789", "tipo": "123456789"}, 404],
+        [1, {"nome": "1", "email": "bar", "senha": "bar", "status": "bar", "tipo": "bar"}, 422],
+        [1, {"nome": "foo", "email": "1", "senha": "1", "status": "1", "tipo": "1"}, 422],
+        [0, {"nome": "foo", "email": "bar", "senha": "bar", "status": "bar", "tipo": "bar"}, 422],
     ],
 )
 def test_update_user_invalid(test_app, monkeypatch, id, payload, status_code):
