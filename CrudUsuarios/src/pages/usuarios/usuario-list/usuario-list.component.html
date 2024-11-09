@@ -1,0 +1,54 @@
+<app-bread-crump [items]="[{text: 'Usuários'}]"></app-bread-crump>
+
+<app-page-header page-title="Usuários" button-text="+ Novo Usuários" button-link="new" button-class="btn-success">
+</app-page-header>
+
+<table class="table table-hover">
+  <thead>
+  <tr class="bg-primary text-light">
+    <th>Nome</th>
+    <th>Email</th>
+    <th>Tipo</th>
+    <th>Status</th>
+    <th>Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let usuario of usuarios">
+    <td>
+      <strong>{{usuario.nome}}</strong> 
+    </td>
+    <td>
+      <span>{{usuario.email}}</span>
+    </td>
+    <td>
+      <span>{{usuario.tipo}}</span>
+    </td>
+    <td>
+      <span>{{usuario.status}}</span>
+    </td>
+    <td>
+      <a [routerLink]="[usuario.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
+      <button (click)="deleteUser(usuario)" class="btn btn-outline-danger btn-sm">Excluir</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Controles de paginação -->
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <button class="page-link" (click)="prevPage()">Anterior</button>
+    </li>
+    
+    <!-- Mostrando o número da página atual -->
+    <li class="page-item active">
+      <span class="page-link">{{ currentPage }} / {{ totalPages }}</span>
+    </li>
+    
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <button class="page-link" (click)="nextPage()">Próximo</button>
+    </li>
+  </ul>
+</nav>

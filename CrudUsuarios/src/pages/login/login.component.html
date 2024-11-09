@@ -1,0 +1,38 @@
+<form [formGroup]="loginForm" (submit)="onSubmit()">
+  <div class="card mb-3">
+    <div class="card-header">
+      Autencação do Usuário
+    </div>
+
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" formControlName="email" id="email">
+
+          <app-form-field-error [form-control]="loginForm.get('email')"></app-form-field-error>
+        </div>
+      </div>
+       <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="senha">senha</label>
+            <input type="password" class="form-control" formControlName="senha" id="senha">
+
+          <app-form-field-error [form-control]="loginForm.get('senha')"></app-form-field-error>
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="alert alert-danger mt-4" *ngIf="serverErrorMessage">
+    <strong>Erro no servidor:</strong>
+    <ul>
+      <li *ngFor="let error of serverErrorMessage">{{error}}</li>
+    </ul>
+  </div>
+
+  <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-lg float-right">
+    Entrar
+  </button>
+</form> 
+
