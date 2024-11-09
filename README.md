@@ -3,7 +3,16 @@
 # Configuração do Projeto
 
 Este documento descreve os passos necessários para configurar e executar o projeto desafio-usuarios.
-Utiliza as tecnologias no Back-end: Python + fastApi + SQLAlchemy, Font-end: Angular e base de dados: postgresql
+Utiliza as tecnologias:
+```
+ Back-end: Python + fastApi + SQLAlchemy + alembic migration
+ ```
+ ```
+ Font-end: Angular 
+ ```
+ ```
+ base de dados: postgresql
+ ```
 
 ## Pré-requisitos
 
@@ -52,7 +61,14 @@ Agora que o ambiente está configurado e os contêineres estão em execução, v
 2. O aplicativo estará acessível em [http://localhost:8003/docs](http://localhost:8003/docs).
 
 ## Executando o Projeto app-front-end
-2. O aplicativo estará acessível em [http://localhost:3001](http://localhost:3001).
+
+1. O aplicativo estará acessível em [http://localhost:3001](http://localhost:3001).
+
+2. Dados de acesso usuário Admin:
+```
+email: admin@example.com
+senha: admin123
+```
 
 ## Encerrando o Projeto
 
